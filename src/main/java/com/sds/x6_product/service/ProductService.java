@@ -9,6 +9,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class ProductService {
@@ -53,5 +55,10 @@ public class ProductService {
     @Transactional(readOnly = true)
     public boolean isAvailable(final long id) {
         return productRepository.isProductAvailable(id);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean areProductsAvailable(List<Long> ids) {
+        return productRepository.areProductsAvailable(ids);
     }
 }

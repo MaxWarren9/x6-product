@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @AllArgsConstructor
 public class ProductRepository {
@@ -32,6 +34,12 @@ public class ProductRepository {
     private static final String EXISTS = """
             SELECT EXISTS(SELECT 1 FROM x6_product.product WHERE id = :id);
             """;
+
+    private static final String EXISTS_BY_IDS = """
+    SELECT COUNT(*) = :size
+    FROM x6_product.product
+    WHERE id IN (:ids);
+    """;
     private final ProductMapper productMapper = new ProductMapper();
     NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -51,6 +59,20 @@ public class ProductRepository {
 
     public boolean isProductAvailable(final long id) {
         return jdbcTemplate.queryForObject(EXISTS, idParam(id), Boolean.class);
+    }
+
+    public boolean areProductsAvailable(final List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return false;
+        }
+
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("ids", ids)
+                .addValue("size", ids.size());
+
+        return Boolean.TRUE.equals(
+                jdbcTemplate.queryForObject(EXISTS_BY_IDS, params, Boolean.class)
+        );
     }
 
     public MapSqlParameterSource productToSql(final Product product) {

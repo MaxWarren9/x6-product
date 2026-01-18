@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/product")
 @AllArgsConstructor
@@ -42,5 +44,11 @@ public class ProductController {
     @Operation(summary = "Обновить продукт")
     public Product update(@PathVariable long id, @RequestBody Product product) {
         return productService.update(id, product);
+    }
+
+    @PostMapping("/exists")
+    @Operation(summary = "Проверить существование товаров по списку id")
+    public boolean areProductsAvailable(@RequestBody List<Long> ids) {
+        return productService.areProductsAvailable(ids);
     }
 }
