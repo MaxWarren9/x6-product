@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-schema-x6-product
+      author: max
+      changes:
+        - sql:
+            sql:
+              CREATE SCHEMA IF NOT EXISTS x6_product;
+
+  - changeSet:
+      id: create-user-product-table
+      author: max
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE IF NOT EXISTS x6_product."product" (
+                id SERIAL PRIMARY KEY,
+                name VARCHAR UNIQUE NOT NULL,
+                price DECIMAL(10,2) NOT NULL,
+                description VARCHAR NOT NULL,
+                stock BIGINT NOT NULL
+              );
