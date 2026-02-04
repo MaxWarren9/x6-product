@@ -6,15 +6,23 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+
 public class ProductMapper implements RowMapper<Product> {
+    private static final String FIELD_ID = "id";
+    private static final String FIELD_NAME = "name";
+    private static final String FIELD_PRICE = "price";
+    private static final String FIELD_DESCRIPTION = "description";
+    private static final String FIELD_STOCK = "stock";
+
     @Override
     public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new Product(
-                rs.getLong("id"),
-                      rs.getString("name"),
-                      rs.getBigDecimal("price"),
-                      rs.getString("description"),
-                      rs.getInt("stock")
+                rs.getLong(FIELD_ID),
+                      rs.getString(FIELD_NAME),
+                      rs.getBigDecimal(FIELD_PRICE),
+                      rs.getString(FIELD_DESCRIPTION),
+                      rs.getInt(FIELD_STOCK)
                       );
     }
 }

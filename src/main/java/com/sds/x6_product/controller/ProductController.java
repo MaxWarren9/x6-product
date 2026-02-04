@@ -30,19 +30,19 @@ public class ProductController {
     }
 
     @GetMapping("/{id}/exists")
-    public boolean isUserAvailable(@PathVariable long id) {
+    public boolean isProductAvailable(@PathVariable("id") Long id) {
         return productService.isAvailable(id);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Получить ппродукт")
+    @Operation(summary = "Получить продукт")
     public Product getById(@PathVariable("id") Long id) {
         return productService.getById(id);
     }
 
     @PatchMapping("/{id}")
     @Operation(summary = "Обновить продукт")
-    public Product update(@PathVariable long id, @RequestBody Product product) {
+    public Product update(@PathVariable("id") Long id, @RequestBody Product product) {
         return productService.update(id, product);
     }
 

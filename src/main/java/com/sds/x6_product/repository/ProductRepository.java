@@ -75,7 +75,7 @@ public class ProductRepository {
         );
     }
 
-    public MapSqlParameterSource productToSql(final Product product) {
+    private MapSqlParameterSource productToSql(final Product product) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         return params
                 .addValue("name", product.name())
